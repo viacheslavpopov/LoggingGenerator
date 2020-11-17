@@ -35,6 +35,9 @@ namespace Example
     {
         [LoggerMessage(0, LogLevel.Critical, "Could not open socket to `{hostName}`")]
         void CouldNotOpenSocket(string hostName);
+
+        [LoggerMessage(1, LogLevel.Critical, "Could not open socket to `{hostName}`")]
+        int CouldNotOpenSocket2(string hostName);
     }
 
     /* Here is the code generated for the above
