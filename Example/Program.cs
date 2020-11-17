@@ -21,7 +21,6 @@
 //    * Ensure that the user's logging interface type isn't generic
 //    * Ensure that logging methods aren't generic
 //    * Ensure that logging methods return void
-//    * Finish implementation of exception support
 //    * Transpose doc comments from source interface to the generated type to improve IntelliSense experience.
 //    * Add nuget packaging voodoo
 
