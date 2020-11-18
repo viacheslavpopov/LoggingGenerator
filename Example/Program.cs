@@ -2,8 +2,8 @@
 
 namespace Example
 {
+    using System.Text.Json;
     using Microsoft.Extensions.Logging;
-    using Microsoft.Extensions.Logging.Debug;
 
     /// <summary>
     /// All the logging messages this assembly outputs.
@@ -16,6 +16,9 @@ namespace Example
         /// </summary>
         [LoggerMessage(0, LogLevel.Critical, "Could not open socket to `{hostName}`")]
         void CouldNotOpenSocket(string hostName);
+
+        [LoggerMessage(1, LogLevel.Critical, "Hello {name}", EventName = "Override")]
+        void SayHello(string name);
     }
 
     [LoggerExtensions]
@@ -103,8 +106,19 @@ namespace Example
     {
         static void Main()
         {
-            using var provider = new DebugLoggerProvider();
-            var logger = provider.CreateLogger("LoggingExample");
+            using var loggerFactory = LoggerFactory.Create(builder =>
+            {
+                builder.AddConsole().AddJsonConsole(o =>
+                {
+                    // This will let us see the structure going to the logger
+                    o.JsonWriterOptions = new JsonWriterOptions
+                    {
+                        Indented = true
+                    };
+                }); 
+            });
+
+            var logger = loggerFactory.CreateLogger("LoggingExample");
 
             // Approach #1: Extension method on ILogger
             logger.CouldNotOpenSocket("microsoft.com");
@@ -112,6 +126,8 @@ namespace Example
             // Approach #2: wrapper type around ILogger
             var d = logger.Wrap();
             d.CouldNotOpenSocket("microsoft.com");
+
+            logger.SayHello("David");
         }
     }
 }
