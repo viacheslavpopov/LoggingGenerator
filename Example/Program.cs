@@ -20,7 +20,6 @@
 // IMPLEMENTATION TODO
 //    * Ensure that the user's logging interface type isn't generic
 //    * Ensure that logging methods aren't generic
-//    * Ensure that logging methods return void
 //    * Transpose doc comments from source interface to the generated type to improve IntelliSense experience.
 //    * Add nuget packaging voodoo
 
@@ -35,9 +34,6 @@ namespace Example
     {
         [LoggerMessage(0, LogLevel.Critical, "Could not open socket to `{hostName}`")]
         void CouldNotOpenSocket(string hostName);
-
-        [LoggerMessage(1, LogLevel.Critical, "Could not open socket to `{hostName}`")]
-        int CouldNotOpenSocket2(string hostName);
     }
 
     /* Here is the code generated for the above
