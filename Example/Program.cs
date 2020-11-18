@@ -13,13 +13,14 @@
 // Use is pretty simple. A service developer creates an interface type which lists all of the log messages that the assembly can produce.
 // Once this is done, a new type is generated automatically which the developer uses to interactively with an ILogger instance. 
 //
-// This Microsoft.Extensions.Logging.Generators project uses C# 9.0 source generators. This is magic voodoo invoked at compile time. This code is
+// The Microsoft.Extensions.Logging.Generators project uses C# 9.0 source generators. This is magic voodoo invoked at compile time. This code is
 // responsible for finding types annotated with the [LoggerExtensions] attribute and automatically generating the strongly-typed
 // logging methods.
 //
 // IMPLEMENTATION TODO
 //    * Transpose doc comments from source interface to the generated type to improve IntelliSense experience.
 //    * Add nuget packaging voodoo
+//    * Localize error messages?
 
 namespace Example
 {
@@ -48,9 +49,6 @@ namespace Example
 
     namespace Example
     {
-        /// <summary>
-        /// All the logging messages this assembly outputs.
-        /// </summary>
         static class LoggerExtensions
         {
             private readonly struct __CouldNotOpenSocketStruct__ : IReadOnlyList<KeyValuePair<string, object>>
@@ -91,9 +89,6 @@ namespace Example
 
             private static readonly EventId __CouldNotOpenSocketEventId__ = new(0, nameof(CouldNotOpenSocket));
 
-            /// <summary>
-            /// Use this when you can't open a socket
-            /// </summary>
             public static void CouldNotOpenSocket(this ILogger logger, string hostName)
             {
                 if (logger.IsEnabled((LogLevel)5))
@@ -109,10 +104,6 @@ namespace Example
             {
                 private readonly ILogger __logger;
                 public __Wrapper__(ILogger logger) => __logger = logger;
-
-                /// <summary>
-                /// Use this when you can't open a socket
-                /// </summary>
                 public void CouldNotOpenSocket(string hostName) =>  __logger.CouldNotOpenSocket(hostName);
             }
         }
