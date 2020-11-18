@@ -18,8 +18,6 @@
 // logging methods.
 //
 // IMPLEMENTATION TODO
-//    * Ensure that the user's logging interface type isn't generic
-//    * Ensure that logging methods aren't generic
 //    * Transpose doc comments from source interface to the generated type to improve IntelliSense experience.
 //    * Add nuget packaging voodoo
 
@@ -28,10 +26,15 @@ namespace Example
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Logging.Debug;
 
-    // interface listing all the logger messages the assembly produces
+    /// <summary>
+    /// All the logging messages this assembly outputs.
+    /// </summary>
     [LoggerExtensions]
     interface ILoggerExtensions
     {
+        /// <summary>
+        /// Use this when you can't open a socket
+        /// </summary>
         [LoggerMessage(0, LogLevel.Critical, "Could not open socket to `{hostName}`")]
         void CouldNotOpenSocket(string hostName);
     }
@@ -85,6 +88,9 @@ namespace Example
 
             private static readonly EventId __CouldNotOpenSocketEventId__ = new(0, nameof(CouldNotOpenSocket));
 
+            /// <summary>
+            /// Use this when you can't open a socket
+            /// </summary>
             public static void CouldNotOpenSocket(this ILogger logger, string hostName)
             {
                 if (logger.IsEnabled((LogLevel)5))
@@ -100,6 +106,10 @@ namespace Example
             {
                 private readonly ILogger __logger;
                 public __Wrapper__(ILogger logger) => __logger = logger;
+
+                /// <summary>
+                /// Use this when you can't open a socket
+                /// </summary>
                 public void CouldNotOpenSocket(string hostName) =>  __logger.CouldNotOpenSocket(hostName);
             }
         }
