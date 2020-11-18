@@ -17,6 +17,15 @@ The Microsoft.Extensions.Logging.Generators project uses C# 9.0 source generator
 responsible for finding types annotated with the [LoggerExtensions] attribute and automatically generating the strongly-typed
 logging methods.
 
+The strongly-typed methods are generated in two forms:
+
+* As extension methods on ILogger. So a developer does logger.MyCustomLoggingMethod(arg1, arg2, arg3) throughout their code.
+
+* As an implementations of the interface type defined by the developer. This effectively encapsulates the ILogger and allows
+the developer to use their interface type for logging throughout their code. The good part about this approach is that it 
+systematically prevents code from using the non-strongly-type methods on ILogger. Using the interface type also tends to
+produce a better IntelliSense experience overall.
+
 ## Design Issues
 
 The fact this uses types generated dynamically at compile-time means
@@ -32,24 +41,24 @@ with Roslyn will show red squiggles to the developer, which is sad.
 
 ## Example
 
-Here is an example interface written by a developer, followed by the code being auto-generated
+Here is an example interface written by a developer, followed by the code being auto-generated.
 
 ```csharp
+/// <summary>
+/// All the logging messages this assembly outputs.
+/// </summary>
+[LoggerExtensions]
+interface ILoggerExtensions
+{
     /// <summary>
-    /// All the logging messages this assembly outputs.
+    /// Use this when you can't open a socket
     /// </summary>
-    [LoggerExtensions]
-    interface ILoggerExtensions
-    {
-        /// <summary>
-        /// Use this when you can't open a socket
-        /// </summary>
-        [LoggerMessage(0, LogLevel.Critical, "Could not open socket to `{hostName}`")]
-        void CouldNotOpenSocket(string hostName);
+    [LoggerMessage(0, LogLevel.Critical, "Could not open socket to `{hostName}`")]
+    void CouldNotOpenSocket(string hostName);
 
-        [LoggerMessage(1, LogLevel.Critical, "Hello {name}", EventName = "Override")]
-        void SayHello(string name);
-    }
+    [LoggerMessage(1, LogLevel.Critical, "Hello {name}", EventName = "Override")]
+    void SayHello(string name);
+}
 ```
 
 And the resulting generated code:
@@ -184,81 +193,6 @@ namespace Example
             public void CouldNotOpenSocket(string hostName) =>  __logger.CouldNotOpenSocket(hostName);
 
             public void SayHello(string name) =>  __logger.SayHello(name);
-
-        }
-
-    }
-}
-
-
-namespace Example
-{
-
-    
-     static class LoggerExtensions
-    {
-        
-        private readonly struct __CouldNotOpenSocketStruct__ : IReadOnlyList<KeyValuePair<string, object>>
-        {
-            private readonly string hostName;
-
-
-            public __CouldNotOpenSocketStruct__(string hostName)
-            {
-                this.hostName = hostName;
-
-            }
-
-
-            public override string ToString() => $"Could not open socket to `{hostName}`";
-
-
-            public int Count => 1;
-
-            public KeyValuePair<string, object> this[int index]
-            {
-                get
-                {
-                    switch (index)
-                    {
-                        case 0:
-                            return new KeyValuePair<string, object>(nameof(hostName), hostName);
-
-                        default:
-                            throw new ArgumentOutOfRangeException(nameof(index));
-                    }
-                }
-            }
-
-            public IEnumerator<KeyValuePair<string, object>> GetEnumerator()
-            {
-                yield return new KeyValuePair<string, object>(nameof(hostName), hostName);
-
-            }
-
-            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-        }
-        private static readonly EventId __CouldNotOpenSocketEventId__ = new(0, nameof(CouldNotOpenSocket));
-
-        
-        public static void CouldNotOpenSocket(this ILogger logger, string hostName)
-        {
-            if (logger.IsEnabled((LogLevel)5))
-            {
-                var message = new __CouldNotOpenSocketStruct__(hostName);
-                logger.Log((LogLevel)5, __CouldNotOpenSocketEventId__, message, null, (s, _) => s.ToString());
-            }
-        }
-
-        public static ILoggerExtensions Wrap(this ILogger logger) => new __Wrapper__(logger);
-        
-        private sealed class __Wrapper__ : ILoggerExtensions
-        {
-            private readonly ILogger __logger;
-
-            public __Wrapper__(ILogger logger) => __logger = logger;
-            
-            public void CouldNotOpenSocket(string hostName) =>  __logger.CouldNotOpenSocket(hostName);
 
         }
 
