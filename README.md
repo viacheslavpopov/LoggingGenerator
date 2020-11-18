@@ -38,6 +38,16 @@ with Roslyn will show red squiggles to the developer, which is sad.
 * Transpose doc comments from source interface to the generated type to improve IntelliSense experience.
 * Add nuget packaging voodoo
 * Localize error messages?
+* Add unit tests around the generator, rather than around the generated output (to test out error handling for example)
+* Support inheritance of logging interfaces:
+
+    interface ICommon
+
+    [LoggerExtensions]
+    interface IFoo : ICommon
+
+    [LoggerExtensions]
+    interface IBar : ICommon
 
 ## Example
 
