@@ -21,16 +21,6 @@ namespace Example
         void SayHello(string name);
     }
 
-    [LoggerExtensions]
-    interface ILoggerExtensions
-    {
-        /// <summary>
-        /// Use this when you can't open a socket
-        /// </summary>
-        [LoggerMessage(0, LogLevel.Critical, "Could not open socket to `{hostName}`")]
-        void CouldNotOpenSocket(string hostName);
-    }
-
     /* Here is the code generated for the above
 
     using System;
