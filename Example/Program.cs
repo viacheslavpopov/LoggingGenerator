@@ -48,6 +48,9 @@ namespace Example
 
     namespace Example
     {
+        /// <summary>
+        /// All the logging messages this assembly outputs.
+        /// </summary>
         static class LoggerExtensions
         {
             private readonly struct __CouldNotOpenSocketStruct__ : IReadOnlyList<KeyValuePair<string, object>>
