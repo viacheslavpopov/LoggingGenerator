@@ -6,24 +6,13 @@ namespace Example
     using System.Text.Json;
     using Microsoft.Extensions.Logging;
 
-    /// <summary>
-    /// All the logging messages this assembly outputs.
-    /// </summary>
-    [LoggerExtensions]
-    interface ILoggerExtensions
+    partial class Log
     {
-        /// <summary>
-        /// Use this when you can't open a socket
-        /// </summary>
         [LoggerMessage(0, LogLevel.Critical, "Could not open socket to `{hostName}`")]
-        void CouldNotOpenSocket(string hostName);
-
-        [LoggerMessage(1, LogLevel.Critical, "Hello {name}", EventName = "Override")]
-        void SayHello(string name);
+        public static partial void CouldNotOpenSocket(ILogger logger, string hostName);
     }
 
-    [LoggerExtensions]
-    public static partial class Log
+    static partial class Log
     {
         [LoggerMessage(1, LogLevel.Debug, @"Connection id '{connectionId}' started.")]
         public static partial void ConnectionStart(ILogger logger, string connectionId);
@@ -78,15 +67,6 @@ namespace Example
             });
 
             var logger = loggerFactory.CreateLogger("LoggingExample");
-
-            // Approach #1: Extension method on ILogger
-            logger.CouldNotOpenSocket("microsoft.com");
-
-            // Approach #2: wrapper type around ILogger
-            var d = logger.Wrap();
-            d.CouldNotOpenSocket("microsoft.com");
-
-            logger.SayHello("David");
 
             var id = Guid.NewGuid().ToString();
             Log.ConnectionStart(logger, id);

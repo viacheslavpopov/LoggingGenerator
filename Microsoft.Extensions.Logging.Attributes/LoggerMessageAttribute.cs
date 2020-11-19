@@ -8,9 +8,6 @@ namespace Microsoft.Extensions.Logging
     /// <summary>
     /// Provides information to guide the production of a strongly-typed logging method.
     /// </summary>
-    /// <remarks>
-    /// This attribute is applied to individual methods in an type annotated with [LoggerWrapper] or [LoggerExtensions].
-    /// </remarks>
     [System.AttributeUsage(System.AttributeTargets.Method, AllowMultiple = false)]
     public sealed class LoggerMessageAttribute : Attribute
     {
@@ -21,11 +18,15 @@ namespace Microsoft.Extensions.Logging
         /// <param name="level">THe logging level produced when invoking the strongly-typed logging method.</param>
         /// <param name="message">The message text output by the logging method. This string is a template that can contain any of the method's parameters.</param>
         /// <remarks>
-        /// The method this attribute is applied to must return <c>void</c> and must not be generic.
+        /// The method this attribute is applied to:
+        ///    - Must be a partial method.
+        ///    - Must be a static method.
+        ///    - Must return <c>void</c>.
+        ///    - Must not be generic.
+        ///    - Must have an ILogger as first parameter.
         /// </remarks>
         /// <example>
-        /// [LoggerExtensions]
-        /// interface ILoggerExtensions
+        /// static partial class Log
         /// {
         ///     [LoggerMessage(0, LogLevel.Critical, "Could not open socket for {hostName}")]
         ///     void CouldNotOpenSocket(string hostName);
@@ -42,7 +43,7 @@ namespace Microsoft.Extensions.Logging
         /// Gets or sets the logging event name for the logging method.
         /// </summary>
         /// <remarks>
-        /// This will be inferred from the method name if not specified.
+        /// This will equal the method name if not specified.
         /// </remarks>
         public string? EventName { get; set; }
 

@@ -35,40 +35,21 @@ with Roslyn will show red squiggles to the developer, which is sad.
 
 ## Implementation Todos
 
-* Transpose doc comments from source interface to the generated type to improve IntelliSense experience.
 * Add nuget packaging voodoo
 * Localize error messages?
 * Add unit tests around the generator, rather than around the generated output (to test out error handling for example)
-* Support generic ILogger<T> by adding a Category property to LoggerExtensionsAttribute. Using this property results in ILogger<Category> types being generated instead of plain ILogger.
-* Support inheritance of logging interfaces:
-
-    interface ICommon
-
-    [LoggerExtensions]
-    interface IFoo : ICommon
-
-    [LoggerExtensions]
-    interface IBar : ICommon
+* Support generic ILogger<T>
+* Check all preconditions on method declarations (no generics, always static, always partial, etc)
 
 ## Example
 
 Here is an example interface written by a developer, followed by the code being auto-generated.
 
 ```csharp
-/// <summary>
-/// All the logging messages this assembly outputs.
-/// </summary>
-[LoggerExtensions]
-interface ILoggerExtensions
+partial class Log
 {
-    /// <summary>
-    /// Use this when you can't open a socket
-    /// </summary>
     [LoggerMessage(0, LogLevel.Critical, "Could not open socket to `{hostName}`")]
-    void CouldNotOpenSocket(string hostName);
-
-    [LoggerMessage(1, LogLevel.Critical, "Hello {name}", EventName = "Override")]
-    void SayHello(string name);
+    public static partial void CouldNotOpenSocket(ILogger logger, string hostName);
 }
 ```
 
@@ -82,131 +63,59 @@ using System.Collections.Generic;
 using Microsoft.Extensions.Logging;
 
 
-namespace Example
+partial class Log
 {
-
-    
-     static class LoggerExtensions
+        
+    private readonly struct __CouldNotOpenSocketStruct__ : IReadOnlyList<KeyValuePair<string, object>>
     {
-        
-        private readonly struct __CouldNotOpenSocketStruct__ : IReadOnlyList<KeyValuePair<string, object>>
+        private readonly string hostName;
+
+
+        public __CouldNotOpenSocketStruct__(string hostName)
         {
-            private readonly string hostName;
+            this.hostName = hostName;
+
+        }
 
 
-            public __CouldNotOpenSocketStruct__(string hostName)
+        public override string ToString() => $"Could not open socket to `{hostName}`";
+
+
+        public int Count => 1;
+
+        public KeyValuePair<string, object> this[int index]
+        {
+            get
             {
-                this.hostName = hostName;
-
-            }
-
-
-            public override string ToString() => $"Could not open socket to `{hostName}`";
-
-
-            public int Count => 1;
-
-            public KeyValuePair<string, object> this[int index]
-            {
-                get
+                switch (index)
                 {
-                    switch (index)
-                    {
-                        case 0:
-                            return new KeyValuePair<string, object>(nameof(hostName), hostName);
+                    case 0:
+                        return new KeyValuePair<string, object>(nameof(hostName), hostName);
 
-                        default:
-                            throw new ArgumentOutOfRangeException(nameof(index));
-                    }
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(index));
                 }
             }
-
-            public IEnumerator<KeyValuePair<string, object>> GetEnumerator()
-            {
-                yield return this[0];
-
-            }
-
-            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
         }
-        private static readonly EventId __CouldNotOpenSocketEventId__ = new(0, nameof(CouldNotOpenSocket));
 
-        
-        public static void CouldNotOpenSocket(this ILogger logger, string hostName)
+        public IEnumerator<KeyValuePair<string, object>> GetEnumerator()
         {
-            if (logger.IsEnabled((LogLevel)5))
-            {
-                var message = new __CouldNotOpenSocketStruct__(hostName);
-                logger.Log((LogLevel)5, __CouldNotOpenSocketEventId__, message, null, (s, _) => s.ToString());
-            }
-        }
-
-        private readonly struct __SayHelloStruct__ : IReadOnlyList<KeyValuePair<string, object>>
-        {
-            private readonly string name;
-
-
-            public __SayHelloStruct__(string name)
-            {
-                this.name = name;
-
-            }
-
-
-            public override string ToString() => $"Hello {name}";
-
-
-            public int Count => 1;
-
-            public KeyValuePair<string, object> this[int index]
-            {
-                get
-                {
-                    switch (index)
-                    {
-                        case 0:
-                            return new KeyValuePair<string, object>(nameof(name), name);
-
-                        default:
-                            throw new ArgumentOutOfRangeException(nameof(index));
-                    }
-                }
-            }
-
-            public IEnumerator<KeyValuePair<string, object>> GetEnumerator()
-            {
-                yield this[0]);
-
-            }
-
-            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-        }
-        private static readonly EventId __SayHelloEventId__ = new(1, "Override");
-
-        
-        public static void SayHello(this ILogger logger, string name)
-        {
-            if (logger.IsEnabled((LogLevel)5))
-            {
-                var message = new __SayHelloStruct__(name);
-                logger.Log((LogLevel)5, __SayHelloEventId__, message, null, (s, _) => s.ToString());
-            }
-        }
-
-        public static ILoggerExtensions Wrap(this ILogger logger) => new __Wrapper__(logger);
-        
-        private sealed class __Wrapper__ : ILoggerExtensions
-        {
-            private readonly ILogger __logger;
-
-            public __Wrapper__(ILogger logger) => __logger = logger;
-            
-            public void CouldNotOpenSocket(string hostName) =>  __logger.CouldNotOpenSocket(hostName);
-
-            public void SayHello(string name) =>  __logger.SayHello(name);
+            yield return this[0];
 
         }
 
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
+    private static readonly EventId __CouldNotOpenSocketEventId__ = new(0, nameof(CouldNotOpenSocket));
+
+    public static partial void CouldNotOpenSocket(ILogger logger, string hostName)
+    {
+        if (logger.IsEnabled((LogLevel)5))
+        {
+            var message = new __CouldNotOpenSocketStruct__(hostName);
+            logger.Log((LogLevel)5, __CouldNotOpenSocketEventId__, message, null, (s, _) => s.ToString());
+        }
+    }
+
 }
 ```
