@@ -39,6 +39,7 @@ with Roslyn will show red squiggles to the developer, which is sad.
 * Add nuget packaging voodoo
 * Localize error messages?
 * Add unit tests around the generator, rather than around the generated output (to test out error handling for example)
+* Support generic ILogger<T> by adding a Category property to LoggerExtensionsAttribute. Using this property results in ILogger<Category> types being generated instead of plain ILogger.
 * Support inheritance of logging interfaces:
 
     interface ICommon
@@ -122,7 +123,7 @@ namespace Example
 
             public IEnumerator<KeyValuePair<string, object>> GetEnumerator()
             {
-                yield return new KeyValuePair<string, object>(nameof(hostName), hostName);
+                yield return this[0];
 
             }
 
@@ -174,7 +175,7 @@ namespace Example
 
             public IEnumerator<KeyValuePair<string, object>> GetEnumerator()
             {
-                yield return new KeyValuePair<string, object>(nameof(name), name);
+                yield this[0]);
 
             }
 
