@@ -57,21 +57,15 @@ And the resulting generated code:
 
 
 ```csharp
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-
-
 partial class Log
 {
         
-    private readonly struct __CouldNotOpenSocketStruct__ : IReadOnlyList<KeyValuePair<string, object>>
+    private readonly struct __CouldNotOpenSocketState : IReadOnlyList<KeyValuePair<string, object>>
     {
         private readonly string hostName;
 
 
-        public __CouldNotOpenSocketStruct__(string hostName)
+        public __CouldNotOpenSocketState(string hostName)
         {
             this.hostName = hostName;
 
@@ -80,6 +74,7 @@ partial class Log
 
         public override string ToString() => $"Could not open socket to `{hostName}`";
 
+        public static readonly Func<__CouldNotOpenSocketState, Exception?, string> Format = (s, _) => s.ToString();
 
         public int Count => 1;
 
@@ -106,14 +101,12 @@ partial class Log
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
-    private static readonly EventId __CouldNotOpenSocketEventId__ = new(0, nameof(CouldNotOpenSocket));
 
     public static partial void CouldNotOpenSocket(ILogger logger, string hostName)
     {
         if (logger.IsEnabled((LogLevel)5))
         {
-            var __state = new __CouldNotOpenSocketStruct__(hostName);
-            logger.Log((LogLevel)5, __CouldNotOpenSocketEventId__, __state, null, (s, _) => s.ToString());
+            logger.Log((LogLevel)5, new EventId(0, nameof(CouldNotOpenSocket)), new __CouldNotOpenSocketState(hostName), null, __CouldNotOpenSocketState.Format);
         }
     }
 
