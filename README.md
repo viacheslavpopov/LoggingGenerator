@@ -112,8 +112,8 @@ partial class Log
     {
         if (logger.IsEnabled((LogLevel)5))
         {
-            var message = new __CouldNotOpenSocketStruct__(hostName);
-            logger.Log((LogLevel)5, __CouldNotOpenSocketEventId__, message, null, (s, _) => s.ToString());
+            var __state = new __CouldNotOpenSocketStruct__(hostName);
+            logger.Log((LogLevel)5, __CouldNotOpenSocketEventId__, __state, null, (s, _) => s.ToString());
         }
     }
 

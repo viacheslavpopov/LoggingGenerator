@@ -32,5 +32,7 @@ namespace Microsoft.Extensions.Logging
         }
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+        public static readonly Func<LogStateHolder, Exception?, string> Format = (s, _) => string.Empty;
     }
 }
