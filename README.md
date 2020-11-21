@@ -78,14 +78,14 @@ partial class Log
 
         public int Count => 1;
 
-        public KeyValuePair<string, object> this[int index]
+        public KeyValuePair<string, object?> this[int index]
         {
             get
             {
                 switch (index)
                 {
                     case 0:
-                        return new KeyValuePair<string, object>(nameof(hostName), hostName);
+                        return new KeyValuePair<string, object?>(nameof(hostName), hostName);
 
                     default:
                         throw new ArgumentOutOfRangeException(nameof(index));
@@ -93,7 +93,7 @@ partial class Log
             }
         }
 
-        public IEnumerator<KeyValuePair<string, object>> GetEnumerator()
+        public IEnumerator<KeyValuePair<string, object?>> GetEnumerator()
         {
             yield return this[0];
 
