@@ -6,6 +6,9 @@ namespace Example
     using System.Text.Json;
     using Microsoft.Extensions.Logging;
 
+    // bogus warning, need to fix analyzer
+#pragma warning disable CA1801 // Review unused parameters
+
     partial class Log
     {
         [LoggerMessage(0, LogLevel.Critical, "Could not open socket to `{hostName}`")]
