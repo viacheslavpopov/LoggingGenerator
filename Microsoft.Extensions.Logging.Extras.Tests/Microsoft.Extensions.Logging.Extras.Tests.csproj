@@ -18,6 +18,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Microsoft.Extensions.Logging.Attributes\Microsoft.Extensions.Logging.Attributes.csproj" />
+    <ProjectReference Include="..\Microsoft.Extensions.Logging.Extras\Microsoft.Extensions.Logging.Extras.csproj" />
   </ItemGroup>
 </Project>
