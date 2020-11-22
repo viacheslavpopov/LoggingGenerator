@@ -40,7 +40,7 @@ with Roslyn will show red squiggles to the developer, which is sad.
 *   all number of parameters and template elements
 *   ensure all IReadOnly functionality works
 * Add unit tests around the generator, rather than around the generated output (to test out error handling for example)
-* Xonsider supporting generic parameters to logging methods
+* Consider supporting generic parameters to logging methods
 * Handle message strings with linefeeds or quotes 
 * Support nullable message parameter types
 
