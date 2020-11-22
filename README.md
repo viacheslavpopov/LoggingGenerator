@@ -39,6 +39,7 @@ with Roslyn will show red squiggles to the developer, which is sad.
 * Consider supporting generic parameters to logging methods
 * Support nullable message parameter types
 * Applying LoggerMessage to a non-partial method in a non-partial class doesn't produce an error, which is confusing for users'
+* The Microsoft.Extensions.Logging.Extras assembly is only temporary. The types in here should go to the Microsoft.Extensions.Logging.Abstractions assembly
 
 ## Example
 
