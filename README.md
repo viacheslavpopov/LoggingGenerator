@@ -37,14 +37,12 @@ with Roslyn will show red squiggles to the developer, which is sad.
 
 * Add nuget packaging voodoo
 * Expand unit tests to cover all generated variants
-*   Different access modifiers
-*   Generic ILogger vs non-generic
 *   all number of parameters and template elements
 *   ensure all IReadOnly functionality works
 * Add unit tests around the generator, rather than around the generated output (to test out error handling for example)
 * Fix parameter type name expansion (needs to include full namespace)
-*   One parameter type name expansion works, consider supporting generic parameters to logging methods
-* Handle message strings with linefeeds
+*   Once parameter type name expansion works, consider supporting generic parameters to logging methods
+* Handle message strings with linefeeds or quotes 
 
 ## Example
 
