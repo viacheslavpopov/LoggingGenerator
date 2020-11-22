@@ -13,6 +13,8 @@ namespace Microsoft.Extensions.Logging
     /// </summary>
     public readonly struct LogStateHolder : IReadOnlyList<KeyValuePair<string, object?>>
     {
+        public int Count => 0;
+
         public KeyValuePair<string, object?> this[int index]
         {
             get
@@ -26,13 +28,11 @@ namespace Microsoft.Extensions.Logging
             yield break;
         }
 
-        public int Count => 0;
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-        public override string ToString() => string.Empty;
-        public static readonly Func<LogStateHolder, Exception?, string> Format = (s, _) => s.ToString();
+        public static readonly Func<LogStateHolder, Exception?, string> Format = (s, _) => string.Empty;
     }
 
-    public readonly struct LogStateHolder<T>
+    public readonly struct LogStateHolder<T> : IReadOnlyList<KeyValuePair<string, object?>>
     {
         private readonly string _name;
         private readonly T _value;
@@ -42,6 +42,8 @@ namespace Microsoft.Extensions.Logging
             _name = name;
             _value = value;
         }
+
+        public int Count => 1;
 
         public KeyValuePair<string, object?> this[int index]
         {
@@ -63,10 +65,12 @@ namespace Microsoft.Extensions.Logging
             yield return this[0];
         }
 
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
         public T Value => _value;
     }
 
-    public readonly struct LogStateHolder<T1, T2>
+    public readonly struct LogStateHolder<T1, T2> : IReadOnlyList<KeyValuePair<string, object?>>
     {
         private readonly string[] _names;
         private readonly T1 _value1;
@@ -78,6 +82,8 @@ namespace Microsoft.Extensions.Logging
             _value1 = value1;
             _value2 = value2;
         }
+
+        public int Count => 2;
 
         public KeyValuePair<string, object?> this[int index]
         {
@@ -105,11 +111,13 @@ namespace Microsoft.Extensions.Logging
             }
         }
 
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
         public T1 Value1 => _value1;
         public T2 Value2 => _value2;
     }
 
-    public readonly struct LogStateHolder<T1, T2, T3>
+    public readonly struct LogStateHolder<T1, T2, T3> : IReadOnlyList<KeyValuePair<string, object?>>
     {
         private readonly string[] _names;
         private readonly T1 _value1;
@@ -123,6 +131,8 @@ namespace Microsoft.Extensions.Logging
             _value2 = value2;
             _value3 = value3;
         }
+
+        public int Count => 3;
 
         public KeyValuePair<string, object?> this[int index]
         {
@@ -153,12 +163,14 @@ namespace Microsoft.Extensions.Logging
             }
         }
 
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
         public T1 Value1 => _value1;
         public T2 Value2 => _value2;
         public T3 Value3 => _value3;
     }
 
-    public readonly struct LogStateHolder<T1, T2, T3, T4>
+    public readonly struct LogStateHolder<T1, T2, T3, T4> : IReadOnlyList<KeyValuePair<string, object?>>
     {
         private readonly string[] _names;
         private readonly T1 _value1;
@@ -174,6 +186,8 @@ namespace Microsoft.Extensions.Logging
             _value3 = value3;
             _value4 = value4;
         }
+
+        public int Count => 4;
 
         public KeyValuePair<string, object?> this[int index]
         {
@@ -207,13 +221,15 @@ namespace Microsoft.Extensions.Logging
             }
         }
 
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
         public T1 Value1 => _value1;
         public T2 Value2 => _value2;
         public T3 Value3 => _value3;
         public T4 Value4 => _value4;
     }
 
-    public readonly struct LogStateHolder<T1, T2, T3, T4, T5>
+    public readonly struct LogStateHolder<T1, T2, T3, T4, T5> : IReadOnlyList<KeyValuePair<string, object?>>
     {
         private readonly string[] _names;
         private readonly T1 _value1;
@@ -231,6 +247,8 @@ namespace Microsoft.Extensions.Logging
             _value4 = value4;
             _value5 = value5;
         }
+
+        public int Count => 5;
 
         public KeyValuePair<string, object?> this[int index]
         {
@@ -267,6 +285,8 @@ namespace Microsoft.Extensions.Logging
             }
         }
 
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
         public T1 Value1 => _value1;
         public T2 Value2 => _value2;
         public T3 Value3 => _value3;
@@ -274,7 +294,7 @@ namespace Microsoft.Extensions.Logging
         public T5 Value5 => _value5;
     }
 
-    public readonly struct LogStateHolder<T1, T2, T3, T4, T5, T6>
+    public readonly struct LogStateHolder<T1, T2, T3, T4, T5, T6> : IReadOnlyList<KeyValuePair<string, object?>>
     {
         private readonly string[] _names;
         private readonly T1 _value1;
@@ -294,6 +314,8 @@ namespace Microsoft.Extensions.Logging
             _value5 = value5;
             _value6 = value6;
         }
+
+        public int Count => 6;
 
         public KeyValuePair<string, object?> this[int index]
         {
@@ -332,6 +354,8 @@ namespace Microsoft.Extensions.Logging
                 yield return this[i];
             }
         }
+
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
         public T1 Value1 => _value1;
         public T2 Value2 => _value2;
