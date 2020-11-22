@@ -36,9 +36,6 @@ with Roslyn will show red squiggles to the developer, which is sad.
 ## Implementation Todos
 
 * Add nuget packaging voodoo
-* Expand unit tests to cover all generated variants
-*   all number of parameters and template elements
-*   ensure all IReadOnly functionality works
 * Add unit tests around the generator, rather than around the generated output (to test out error handling for example)
 * Consider supporting generic parameters to logging methods
 * Support nullable message parameter types
