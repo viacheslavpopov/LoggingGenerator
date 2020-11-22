@@ -36,9 +36,9 @@ with Roslyn will show red squiggles to the developer, which is sad.
 ## Implementation Todos
 
 * Add nuget packaging voodoo
-* Add unit tests around the generator, rather than around the generated output (to test out error handling for example)
 * Consider supporting generic parameters to logging methods
 * Support nullable message parameter types
+* Applying LoggerMessage to a non-partial method in a non-partial class doesn't produce an error, which is confusing for users'
 
 ## Example
 
