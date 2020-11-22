@@ -37,6 +37,7 @@ with Roslyn will show red squiggles to the developer, which is sad.
 
 * Add nuget packaging voodoo
 * Localize error messages?
+* Expand unit tests to cover all generated variants
 * Add unit tests around the generator, rather than around the generated output (to test out error handling for example)
 * Fix parameter type name expansion (needs to include full namespace)
 *   One parameter type name expansion works, consider supporting generic parameters to logging methods
