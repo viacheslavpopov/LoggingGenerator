@@ -9,7 +9,7 @@ namespace Example
     partial class Log
     {
         [LoggerMessage(0, LogLevel.Critical, "Could not open socket to `{hostName}`")]
-        internal static partial void CouldNotOpenSocket(ILogger<int> logger, string hostName);
+        internal static partial void CouldNotOpenSocket(ILogger logger, string hostName);
     }
 
     static partial class Log

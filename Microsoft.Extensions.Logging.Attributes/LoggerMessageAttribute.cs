@@ -24,6 +24,7 @@ namespace Microsoft.Extensions.Logging
         ///    - Must return <c>void</c>.
         ///    - Must not be generic.
         ///    - Must have an ILogger as first parameter.
+        ///    - None of the parameters can be generic.
         /// </remarks>
         /// <example>
         /// static partial class Log

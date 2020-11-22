@@ -44,6 +44,7 @@ with Roslyn will show red squiggles to the developer, which is sad.
 * Add unit tests around the generator, rather than around the generated output (to test out error handling for example)
 * Fix parameter type name expansion (needs to include full namespace)
 *   One parameter type name expansion works, consider supporting generic parameters to logging methods
+* Handle message strings with linefeeds
 
 ## Example
 
@@ -63,34 +64,22 @@ And the resulting generated code:
 ```csharp
 partial class Log
 {
-    private readonly struct __CouldNotOpenSocketState : global::System.Collections.Generic.IReadOnlyList<global::System.Collections.Generic.KeyValuePair<string, object?>>
+    private static readonly global::System.Func<global::Microsoft.Extensions.Logging.LogStateHolder<string>, global::System.Exception?, string> __CouldNotOpenSocketFormatFunc = (__holder, _) =>
     {
-        private readonly global::Microsoft.Extensions.Logging.LogStateHolder<string> _holder;
+        var hostName = __holder.Value;
+        return $"Could not open socket to `{hostName}`";
+    };
 
-        public __CouldNotOpenSocketState(string hostName)
-        {
-            _holder = new(nameof(hostName), hostName);
-        }
-
-        public static readonly global::System.Func<__CouldNotOpenSocketState, global::System.Exception?, string> Format = (s, _) => s.ToString();
-
-        public override string ToString()
-        {
-            var hostName = _holder.Value;
-            return $"Could not open socket to `{hostName}`";
-        }
-
-        public int Count => 1;
-        public global::System.Collections.Generic.KeyValuePair<string, object?> this[int index] => _holder[index];
-        public global::System.Collections.Generic.IEnumerator<global::System.Collections.Generic.KeyValuePair<string, object?>> GetEnumerator() => (global::System.Collections.Generic.IEnumerator<global::System.Collections.Generic.KeyValuePair<string, object?>>)_holder.GetEnumerator();
-        System.Collections.IEnumerator global::System.Collections.IEnumerable.GetEnumerator() => GetEnumerator();
-    }
-            
-    public static partial void CouldNotOpenSocket(global::Microsoft.Extensions.Logging.ILogger logger, string hostName)
+    internal static partial void CouldNotOpenSocket(Microsoft.Extensions.Logging.ILogger __logger, string hostName)
     {
-        if (logger.IsEnabled((global::Microsoft.Extensions.Logging.LogLevel)5))
+        if (__logger.IsEnabled((global::Microsoft.Extensions.Logging.LogLevel)5))
         {
-            logger.Log((global::Microsoft.Extensions.Logging.LogLevel)5, new global::Microsoft.Extensions.Logging.EventId(0, nameof(CouldNotOpenSocket)), new __CouldNotOpenSocketState(hostName), null, __CouldNotOpenSocketState.Format);
+            __logger.Log(
+                (global::Microsoft.Extensions.Logging.LogLevel)5,
+                new global::Microsoft.Extensions.Logging.EventId(0, nameof(CouldNotOpenSocket)),
+                new global::Microsoft.Extensions.Logging.LogStateHolder<string>(nameof(hostName), hostName),
+                null,
+                __CouldNotOpenSocketFormatFunc);
         }
     }
 }
