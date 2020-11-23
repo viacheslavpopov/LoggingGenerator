@@ -27,7 +27,6 @@ with Roslyn will show red squiggles to the developer, which is sad.
 ## Implementation Todos
 
 * Add nuget packaging voodoo
-* Consider supporting generic parameters to logging methods
 * Support nullable message parameter types
 * The Microsoft.Extensions.Logging.Extras assembly is only temporary. The types in here should go to the Microsoft.Extensions.Logging.Abstractions assembly
 
