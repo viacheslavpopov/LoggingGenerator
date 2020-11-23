@@ -28,17 +28,22 @@ namespace Microsoft.Extensions.Logging
             yield break;
         }
 
+        public override string ToString() => string.Empty;
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
         public static readonly Func<LogStateHolder, Exception?, string> Format = (s, _) => string.Empty;
     }
 
     public readonly struct LogStateHolder<T> : IReadOnlyList<KeyValuePair<string, object?>>
     {
+        private readonly Func<LogStateHolder<T>, Exception?, string> _formatFunc;
+        private readonly Exception? _ex;
         private readonly string _name;
         private readonly T _value;
 
-        public LogStateHolder(string name, T value)
+        public LogStateHolder(Func<LogStateHolder<T>, Exception?, string> formatFunc, Exception? ex, string name, T value)
         {
+            _formatFunc = formatFunc;
+            _ex = ex;
             _name = name;
             _value = value;
         }
@@ -67,17 +72,23 @@ namespace Microsoft.Extensions.Logging
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
+        public override string ToString() => _formatFunc(this, _ex);
+
         public T Value => _value;
     }
 
     public readonly struct LogStateHolder<T1, T2> : IReadOnlyList<KeyValuePair<string, object?>>
     {
+        private readonly Func<LogStateHolder<T1, T2>, Exception?, string> _formatFunc;
+        private readonly Exception? _ex;
         private readonly string[] _names;
         private readonly T1 _value1;
         private readonly T2 _value2;
 
-        public LogStateHolder(string[] names, T1 value1, T2 value2)
+        public LogStateHolder(Func<LogStateHolder<T1, T2>, Exception?, string> formatFunc, Exception? ex, string[] names, T1 value1, T2 value2)
         {
+            _formatFunc = formatFunc;
+            _ex = ex;
             _names = names;
             _value1 = value1;
             _value2 = value2;
@@ -113,19 +124,25 @@ namespace Microsoft.Extensions.Logging
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
+        public override string ToString() => _formatFunc(this, _ex);
+
         public T1 Value1 => _value1;
         public T2 Value2 => _value2;
     }
 
     public readonly struct LogStateHolder<T1, T2, T3> : IReadOnlyList<KeyValuePair<string, object?>>
     {
+        private readonly Func<LogStateHolder<T1, T2, T3>, Exception?, string> _formatFunc;
+        private readonly Exception? _ex;
         private readonly string[] _names;
         private readonly T1 _value1;
         private readonly T2 _value2;
         private readonly T3 _value3;
 
-        public LogStateHolder(string[] names, T1 value1, T2 value2, T3 value3)
+        public LogStateHolder(Func<LogStateHolder<T1, T2, T3>, Exception?, string> formatFunc, Exception? ex, string[] names, T1 value1, T2 value2, T3 value3)
         {
+            _formatFunc = formatFunc;
+            _ex = ex;
             _names = names;
             _value1 = value1;
             _value2 = value2;
@@ -165,6 +182,8 @@ namespace Microsoft.Extensions.Logging
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
+        public override string ToString() => _formatFunc(this, _ex);
+
         public T1 Value1 => _value1;
         public T2 Value2 => _value2;
         public T3 Value3 => _value3;
@@ -172,14 +191,18 @@ namespace Microsoft.Extensions.Logging
 
     public readonly struct LogStateHolder<T1, T2, T3, T4> : IReadOnlyList<KeyValuePair<string, object?>>
     {
+        private readonly Func<LogStateHolder<T1, T2, T3, T4>, Exception?, string> _formatFunc;
+        private readonly Exception? _ex;
         private readonly string[] _names;
         private readonly T1 _value1;
         private readonly T2 _value2;
         private readonly T3 _value3;
         private readonly T4 _value4;
 
-        public LogStateHolder(string[] names, T1 value1, T2 value2, T3 value3, T4 value4)
+        public LogStateHolder(Func<LogStateHolder<T1, T2, T3, T4>, Exception?, string> formatFunc, Exception? ex, string[] names, T1 value1, T2 value2, T3 value3, T4 value4)
         {
+            _formatFunc = formatFunc;
+            _ex = ex;
             _names = names;
             _value1 = value1;
             _value2 = value2;
@@ -223,6 +246,8 @@ namespace Microsoft.Extensions.Logging
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
+        public override string ToString() => _formatFunc(this, _ex);
+
         public T1 Value1 => _value1;
         public T2 Value2 => _value2;
         public T3 Value3 => _value3;
@@ -231,6 +256,8 @@ namespace Microsoft.Extensions.Logging
 
     public readonly struct LogStateHolder<T1, T2, T3, T4, T5> : IReadOnlyList<KeyValuePair<string, object?>>
     {
+        private readonly Func<LogStateHolder<T1, T2, T3, T4, T5>, Exception?, string> _formatFunc;
+        private readonly Exception? _ex;
         private readonly string[] _names;
         private readonly T1 _value1;
         private readonly T2 _value2;
@@ -238,8 +265,10 @@ namespace Microsoft.Extensions.Logging
         private readonly T4 _value4;
         private readonly T5 _value5;
 
-        public LogStateHolder(string[] names, T1 value1, T2 value2, T3 value3, T4 value4, T5 value5)
+        public LogStateHolder(Func<LogStateHolder<T1, T2, T3, T4, T5>, Exception?, string> formatFunc, Exception? ex, string[] names, T1 value1, T2 value2, T3 value3, T4 value4, T5 value5)
         {
+            _formatFunc = formatFunc;
+            _ex = ex;
             _names = names;
             _value1 = value1;
             _value2 = value2;
@@ -287,6 +316,8 @@ namespace Microsoft.Extensions.Logging
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
+        public override string ToString() => _formatFunc(this, _ex);
+
         public T1 Value1 => _value1;
         public T2 Value2 => _value2;
         public T3 Value3 => _value3;
@@ -296,6 +327,8 @@ namespace Microsoft.Extensions.Logging
 
     public readonly struct LogStateHolder<T1, T2, T3, T4, T5, T6> : IReadOnlyList<KeyValuePair<string, object?>>
     {
+        private readonly Func<LogStateHolder<T1, T2, T3, T4, T5, T6>, Exception?, string> _formatFunc;
+        private readonly Exception? _ex;
         private readonly string[] _names;
         private readonly T1 _value1;
         private readonly T2 _value2;
@@ -304,8 +337,10 @@ namespace Microsoft.Extensions.Logging
         private readonly T5 _value5;
         private readonly T6 _value6;
 
-        public LogStateHolder(string[] names, T1 value1, T2 value2, T3 value3, T4 value4, T5 value5, T6 value6)
+        public LogStateHolder(Func<LogStateHolder<T1, T2, T3, T4, T5, T6>, Exception?, string> formatFunc, Exception? ex, string[] names, T1 value1, T2 value2, T3 value3, T4 value4, T5 value5, T6 value6)
         {
+            _formatFunc = formatFunc;
+            _ex = ex;
             _names = names;
             _value1 = value1;
             _value2 = value2;
@@ -356,6 +391,8 @@ namespace Microsoft.Extensions.Logging
         }
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+        public override string ToString() => _formatFunc(this, _ex);
 
         public T1 Value1 => _value1;
         public T2 Value2 => _value2;
