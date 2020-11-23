@@ -10,21 +10,12 @@ The point of this exercise is to create a logging model which:
 * Enables output in a dense binary format
 * Enables more effective auditing of log data
 
-Use is pretty simple. A service developer creates an interface type which lists all of the log messages that the assembly can produce.
-Once this is done, a new type is generated automatically which the developer uses to interactively with an ILogger instance. 
+Use is pretty simple. A service developer creates a class which lists all of the log messages that the assembly can produce.
+Once this is done, new methods are generated automatically which the developer uses to interact with an ILogger instance. 
 
 The Microsoft.Extensions.Logging.Generators project uses C# 9.0 source generators. This is magic voodoo invoked at compile time. This code is
 responsible for finding types annotated with the [LoggerExtensions] attribute and automatically generating the strongly-typed
 logging methods.
-
-The strongly-typed methods are generated in two forms:
-
-* As extension methods on ILogger. So a developer does logger.MyCustomLoggingMethod(arg1, arg2, arg3) throughout their code.
-
-* As an implementations of the interface type defined by the developer. This effectively encapsulates the ILogger and allows
-the developer to use their interface type for logging throughout their code. The good part about this approach is that it 
-systematically prevents code from using the non-strongly-type methods on ILogger. Using the interface type also tends to
-produce a better IntelliSense experience overall.
 
 ## Design Issues
 
