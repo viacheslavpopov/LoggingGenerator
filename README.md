@@ -56,10 +56,10 @@ partial class Log
 
     internal static partial void CouldNotOpenSocket(Microsoft.Extensions.Logging.ILogger __logger, string hostName)
     {
-        if (__logger.IsEnabled((global::Microsoft.Extensions.Logging.LogLevel)5))
+        if (__logger.IsEnabled(global::Microsoft.Extensions.Logging.LogLevel.Critical))
         {
             __logger.Log(
-                (global::Microsoft.Extensions.Logging.LogLevel)5,
+                global::Microsoft.Extensions.Logging.LogLevel.Critical,
                 new global::Microsoft.Extensions.Logging.EventId(0, nameof(CouldNotOpenSocket)),
                 new global::Microsoft.Extensions.Logging.LogStateHolder<string>(nameof(hostName), hostName),
                 null,
