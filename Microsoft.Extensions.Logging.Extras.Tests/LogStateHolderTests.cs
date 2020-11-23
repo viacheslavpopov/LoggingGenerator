@@ -27,7 +27,8 @@ namespace Microsoft.Extensions.Logging.Tests
                 new KeyValuePair<string, object?>("name1", 1),
             };
 
-            var s = new LogStateHolder<int>("name1", 1);
+            Func<LogStateHolder<int>, Exception?, string> f = (_, _) => string.Empty;
+            var s = new LogStateHolder<int>(f, "name1", 1);
             TestCollection(kvp, s);
             Assert.Equal(kvp[0].Value, s.Value);
         }
@@ -41,7 +42,8 @@ namespace Microsoft.Extensions.Logging.Tests
                 new KeyValuePair<string, object?>("name2", 2),
             };
 
-            var s = new LogStateHolder<int, int>(new[] { "name1", "name2" }, 1, 2);
+            Func<LogStateHolder<int, int>, Exception?, string> f = (_, _) => string.Empty;
+            var s = new LogStateHolder<int, int>(f, new[] { "name1", "name2" }, 1, 2);
             TestCollection(kvp, s);
             Assert.Equal(kvp[0].Value, s.Value1);
             Assert.Equal(kvp[1].Value, s.Value2);
@@ -57,7 +59,8 @@ namespace Microsoft.Extensions.Logging.Tests
                 new KeyValuePair<string, object?>("name3", 3),
             };
 
-            var s = new LogStateHolder<int, int, int>(new[] { "name1", "name2", "name3" }, 1, 2, 3);
+            Func<LogStateHolder<int, int, int>, Exception?, string> f = (_, _) => string.Empty;
+            var s = new LogStateHolder<int, int, int>(f, new[] { "name1", "name2", "name3" }, 1, 2, 3);
             TestCollection(kvp, s);
             Assert.Equal(kvp[0].Value, s.Value1);
             Assert.Equal(kvp[1].Value, s.Value2);
@@ -75,7 +78,8 @@ namespace Microsoft.Extensions.Logging.Tests
                 new KeyValuePair<string, object?>("name4", 4),
             };
 
-            var s = new LogStateHolder<int, int, int, int>(new[] { "name1", "name2", "name3", "name4" }, 1, 2, 3, 4);
+            Func<LogStateHolder<int, int, int, int>, Exception?, string> f = (_, _) => string.Empty;
+            var s = new LogStateHolder<int, int, int, int>(f, new[] { "name1", "name2", "name3", "name4" }, 1, 2, 3, 4);
             TestCollection(kvp, s);
             Assert.Equal(kvp[0].Value, s.Value1);
             Assert.Equal(kvp[1].Value, s.Value2);
@@ -95,7 +99,8 @@ namespace Microsoft.Extensions.Logging.Tests
                 new KeyValuePair<string, object?>("name5", 5),
             };
 
-            var s = new LogStateHolder<int, int, int, int, int>(new[] { "name1", "name2", "name3", "name4", "name5" }, 1, 2, 3, 4, 5);
+            Func<LogStateHolder<int, int, int, int, int>, Exception?, string> f = (_, _) => string.Empty;
+            var s = new LogStateHolder<int, int, int, int, int>(f, new[] { "name1", "name2", "name3", "name4", "name5" }, 1, 2, 3, 4, 5);
             TestCollection(kvp, s);
             Assert.Equal(kvp[0].Value, s.Value1);
             Assert.Equal(kvp[1].Value, s.Value2);
@@ -117,7 +122,8 @@ namespace Microsoft.Extensions.Logging.Tests
                 new KeyValuePair<string, object?>("name6", 6),
             };
 
-            var s = new LogStateHolder<int, int, int, int, int, int>(new[] { "name1", "name2", "name3", "name4", "name5", "name6" }, 1, 2, 3, 4, 5, 6);
+            Func<LogStateHolder<int, int, int, int, int, int>, Exception?, string> f = (_, _) => string.Empty;
+            var s = new LogStateHolder<int, int, int, int, int, int>(f, new[] { "name1", "name2", "name3", "name4", "name5", "name6" }, 1, 2, 3, 4, 5, 6);
             TestCollection(kvp, s);
             Assert.Equal(kvp[0].Value, s.Value1);
             Assert.Equal(kvp[1].Value, s.Value2);
